@@ -10,6 +10,7 @@
     var DIALOG_DIMENSIONS = {
         width: 600,
         height: 425
+
     };
     var pickerApiLoaded = false;
 
@@ -27,12 +28,15 @@
 
     function createPicker(token) {
 
-        if (pickerApiLoaded && token) {
-
+        if (pickerApiLoaded && token)
+        {
+        
+        
             var docsView = new google.picker.DocsView()
                 .setIncludeFolders(config.IncludeFolders)
                 .setMimeTypes(config.mimeTypes)
-                .setSelectFolderEnabled(config.SelectFolderEnabled);
+                .setSelectFolderEnabled(config.SelectFolderEnabled)
+                .setMode( config.GRID ? google.picker.DocsViewMode.GRID : google.picker.DocsViewMode.LIST )
 
             var picker = new google.picker.PickerBuilder()
                 .addView(docsView)
