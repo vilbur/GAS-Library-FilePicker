@@ -36,7 +36,37 @@
                 .setMimeTypes(config.mimeTypes)
                 .setSelectFolderEnabled(config.SelectFolderEnabled)
                 .setMode( config.GRID ? google.picker.DocsViewMode.GRID : google.picker.DocsViewMode.LIST )
-                .setParent('1--GVXx53g5-YYV0N-9jJ3DVfUDWylXHg')	
+//                .setParent('1--GVXx53g5-YYV0N-9jJ3DVfUDWylXHg')	
+
+			/** Set root folder of picker
+			 */
+			var setParentFolder = (function()
+			{				
+				var getFolderByName = function()
+				{
+                    console.log('getFolderByName()')
+                    var folders	= DriveApp.getFoldersByName();
+                    return folders.next().getId();
+				};
+
+				var getParentFolderOfDocument = function()
+				{
+                    console.log('getParentFolderOfDocument()')
+                    var sheet_id	= SpreadsheetApp.getActiveSpreadsheet().getId();
+                    return DriveApp.getFileById(sheet_id).getParents().next().getId();
+				};
+
+				var type_of_parent	= typeof config.Parent;
+
+				switch (type_of_parent)
+				{
+					case 'undefined':	break;
+					case 'string':	getFolderByName();break;
+					case 'boolean':	getParentFolderOfDocument();break;
+				}
+				
+			})();
+
 
             var PickerBuilder = new google.picker.PickerBuilder()
                 .addView(docsView)
